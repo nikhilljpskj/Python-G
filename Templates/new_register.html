@@ -1,0 +1,225 @@
+<html lang="en">
+
+
+<head>
+    <meta charset="UTF-8">
+
+    <style>
+      /* Your CSS code goes here */
+      /* Global Styles */
+      body {
+          font-family: Arial, sans-serif;
+          line-height: 1.6;
+      }
+
+      .container {
+          max-width: 800px;
+          margin: 0 auto;
+          padding: 20px;
+      }
+
+      h1 {
+          text-align: center;
+      }
+
+      /* Form Styles */
+      .registartion-form {
+          margin-top: 20px;
+      }
+
+      table {
+          width: 100%;
+          border-collapse: collapse;
+      }
+
+      table tr td {
+          padding: 5px;
+      }
+
+      input[type="text"],
+      input[type="number"],
+      input[type="date"],
+      select,
+      textarea {
+          width: 100%;
+          padding: 8px;
+          border: 1px solid #ccc;
+          border-radius: 4px;
+      }
+
+      input[type="radio"],
+      input[type="checkbox"] {
+          margin-right: 5px;
+      }
+
+      /* Buttons */
+      .btn {
+          display: inline-block;
+          padding: 10px 20px;
+          text-align: center;
+          text-decoration: none;
+          color: #fff;
+          background-color: #007bff;
+          border: none;
+          border-radius: 4px;
+          cursor: pointer;
+      }
+
+      .btn.btn-primary {
+          background-color: #428bca;
+      }
+
+      .btn.btn-success {
+          background-color: #5cb85c;
+      }
+
+      /* Dropdown */
+      .form-control {
+          width: 100%;
+          padding: 8px;
+          border: 1px solid #ccc;
+          border-radius: 4px;
+      }
+
+      /* Form Validation Error Messages */
+      .error-message {
+          color: red;
+          font-size: 14px;
+      }
+
+      /* Responsive Styles */
+      @media screen and (max-width: 600px) {
+          table tr td {
+              display: block;
+              width: 100%;
+              box-sizing: border-box;
+          }
+      }
+  </style>
+
+
+    <title>Title</title>
+     {% load static %}
+    <link href="{% static 'css/form.css' %}" rel="stylesheet" type="text/css">
+    <script src="{% static 'js/form.js' %}" type="text/javascript"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+</head>
+<body>
+<div class="container">
+  <h1>Registration Form</h1>
+  <form name="registration" class="registartion-form" onsubmit="return formValidation()" action="{% url 'task_app:new_register' %}" method="POST">
+
+    {% csrf_token %}
+
+
+    <select name="district" id="district" class="form-control">
+      <option value="0">--Select District--</option>
+      {% for district in districts %}
+      <option value="{{ district.id }}">{{ district.district }}</option>
+      {% endfor %}
+  </select>
+  
+  
+  <!-- Branch dropdown -->
+  <select name="branch" id="branch" class="form-control">
+      <option value="0">--Select Branch--</option>
+  </select>
+
+    <br><br>
+
+    <table>
+      <tr>
+        <td><label for="name">Name :</label></td>
+        <td><input type="text" name="name" id="name" placeholder="Name" required></td>
+      </tr>
+      <tr>
+        <td><label for="dob">DOB :</label></td>
+        <td><input type="date" name="dob" id="dob" placeholder="DOB" required></td>
+      </tr>
+      <tr>
+        <td><label for="age">Age :</label></td>
+        <td><input type="number" name="number" id="number" placeholder="Age" required></td>
+      </tr>
+      <tr>
+        <td><label for="gender">Gender :</label></td>
+        <td>Male: <input type="radio" name="gender" value="male">
+          Female: <input type="radio" name="gender" value="female">
+          Transgender: <input type="radio" name="gender" value="Transgender" required></td>
+      </tr>
+      <tr>
+        <td><label for="phoneNumber">Phone Number :</label></td>
+        <td><input type="number" name="phoneNumber" id="phoneNumber" required></td>
+      </tr>
+      <tr>
+        <td><label for="email">Email :</label></td>
+        <td><input type="text" name="email" id="email" placeholder="Email" required></td>
+      </tr>
+      
+      <tr>
+        <td><label for="address">Address :</label></td>
+        <td><textarea name="address" id="address" placeholder="Address" required></textarea></td>
+      </tr>
+
+      <tr>
+        <td><label for="Account">Account Type :</label></td>
+        <td>
+          <select id="account" name="account">
+             <option value="">Choose</option>
+             <option value="Savings">Savings Account</option>
+             <option value="Current">Current Account</option>
+              <option value="Fixed">Fixed Deposit Account</option>
+             <option value="Recurring">Recurring Deposit Account</option>
+
+          </select></td>
+      </tr>
+
+      <tr>
+        <td><label for="material">Materials Required :</label></td>
+        <td>
+          <input type="checkbox" id="debit" name="materials[]" value="Debit Card">
+          <label for="debit">Debit Card</label>
+          <input type="checkbox" id="credit" name="materials[]" value="Credit Card">
+          <label for="credit">Credit Card</label>
+          <input type="checkbox" id="cheque" name="materials[]" value="Cheque Book">
+          <label for="debit">Cheque Book</label></td>
+      </tr>
+    </table>
+      <br><br>
+
+      <button class="btn btn-success" type="submit">Submit</button>
+      <a class="btn btn-primary" href="{% url 'task_app:base' %}">Logout</a>
+      
+
+  </form>
+
+  <script>
+    // Add event listener to the district dropdown
+    document.getElementById('district').addEventListener('change', function () {
+        var districtId = this.value;
+        var branchSelect = document.getElementById('branch');
+
+        // Clear existing options
+        branchSelect.innerHTML = '<option value="0">--Select Branch--</option>';
+
+        // Fetch branches using AJAX
+        if (districtId !== '0') {
+            fetch(`/get_branches/${districtId}/`)
+                .then(response => response.json())
+                .then(data => {
+                    data.forEach(branch => {
+                        var option = document.createElement('option');
+                        option.value = branch.id;
+                        option.textContent = branch.branch;
+                        branchSelect.appendChild(option);
+                    });
+                });
+        }
+    });
+</script>
+
+</div>
+</body>
+</html>

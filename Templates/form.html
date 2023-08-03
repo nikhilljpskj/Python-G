@@ -1,0 +1,84 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link href="{% static 'css/form.css' %}" rel="stylesheet" type="text/css">
+    <script src="{% static 'js/form.js' %}" type="text/javascript"></script>
+
+</head>
+<body style="background-color:SlateBlue;">
+<form action="form/"  method="post">
+    {% csrf_token %}
+
+    <div class="container">
+    <h1>Registration Form</h1>
+    <hr>
+
+    <label for="uname"><b>Name :</b></label>
+    <input type="text" placeholder="Enter Name" name="uname" required><br><br>
+
+    <label for="date"><b>DOB :</b></label>
+    <input type="date" placeholder="Enter DOB" name="date" required><br><br>
+
+    <label for="number"><b>Age :</b></label>
+    <input type="number" placeholder="Enter Age" name="number" required><br><br>
+
+    <label for="uname"><b>Gender :</b></label>
+        <select name="Gender">
+         <option value="1">Gender</option>
+         <option value="a">Female</option>
+         <option value="b">Male</option>
+        </select><br><br>
+
+    <label for="number"><b>Phone Number :</b></label>
+    <input type="number" placeholder="Enter Phone Number" name="number" required><br><br>
+
+    <label for="uname"><b>Address :</b></label>
+    <input type="text" placeholder="Enter Address" name="uname" required><br><br>
+
+    <label for="email"><b>Email :</b></label>
+    <input type="email" placeholder="Enter Email" name="email" required><br><br>
+
+    <label for="uname"><b>Districts :</b></label>
+      <select name="Districts">
+         <option value="1">Districts</option>
+         <option value="a">Trivandrum</option>
+         <option value="b">Kollam</option>
+         <option value="c">Pathanamthitta</option>
+         <option value="d">Alappuzha</option>
+          <option value="d">Ernakulam</option>
+    </select><br><br>
+
+    <label for="uname"><b>Branches :</b></label>
+    <select name="Branches">
+        <option value="1">Branches</option>
+    </select><br><br>
+
+
+        <label for="uname"><b>Acsount Type :</b></label>
+      <select name="Account Type">
+        <option value="1">Account Type</option>
+        <option value="a">Savings Account</option>
+        <option value="b">Current Account</option>
+        <option value="c">Fixed Deposit Account</option>
+        <option value="d">Recurring Deposit Account</option>
+    </select><br><br>
+
+
+        <label for="uname"><b>Materials :</b></label><br>
+       <input type="checkbox" id="material1" name="material1" value="Debit Card">
+          <label for="material1"> Debit Card</label><br>
+       <input type="checkbox" id="material2" name="material2" value="Credi Card">
+          <label for="material2"> Credit Card</label><br>
+       <input type="checkbox" id="material3" name="material3" value="Cheque Book">
+          <label for="material3"> Cheque Book</label><br><br>
+         <hr>
+
+    <button><a class="btn btn-success" type="submit" href="{% url 'task_app:submit' %}">Submit</a></button>
+    <button><a class="btn btn-success" type="submit" href="{% url 'task_app:base' %}">Logout</a></button>
+
+</form>
+</body>
+</html>
