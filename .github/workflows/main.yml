@@ -31,10 +31,10 @@ jobs:
           
          
           git fetch
-          git rebase origin/master
+          git rebase origin/main
 
           
-          git push origin HEAD:master
+          git push origin HEAD:main
         else
           echo "No changes to commit."
         fi
